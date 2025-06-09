@@ -1,270 +1,348 @@
-# Nutuk RAG Sistemi - Kullanım Kılavuzu
+# Nutuk RAG System - Advanced AI-Powered Q&A
 
-## 🎯 Ne Yapıyor?
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-Latest-orange.svg)](https://langchain.com/)
 
-Bu sistem, Atatürk'ün **Nutuk** eseri üzerinde **RAG (Retrieval-Augmented Generation)** teknolojisi kullanarak akıllı soru-cevap hizmeti sunar.
+## 🎯 What Does It Do?
 
-- 📚 **Nutuk** PDF'inden vektör veritabanı oluşturur
-- 🔍 Sorularınızla ilgili metinleri bulur
-- 🤖 **Ollama** ile yanıtlar üretir
-- 📄 Kaynak sayfa bilgilerini gösterir
+This system provides an intelligent Q&A service over Atatürk's **Nutuk** (The Great Speech) using advanced **RAG (Retrieval-Augmented Generation)** technology.
 
-## 🚀 Kurulum
+### 🚀 Key Features
 
-### 1. Gereksinimler
+- 📚 **Smart Document Processing**: Creates vector database from Nutuk PDF
+- 🔍 **Hybrid Search**: Combines semantic and keyword search (BM25)
+- 🤖 **AI-Powered Answers**: Uses Ollama for intelligent responses
+- 📄 **Source Attribution**: Shows exact page references
+- ⚡ **Optimized Performance**: 300-character chunks for better accuracy
+- 🌐 **Modern Web UI**: Beautiful, responsive interface
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.8+
+- [Ollama](https://ollama.ai) installed and running
+
+### Installation
+
+1. **Clone the repository**
 
 ```bash
-# Python 3.8+ gerekli
-# Ollama kurulu olmalı (https://ollama.ai)
+git clone https://github.com/SerdarYildiz06/nutuk-rag.git
+cd nutuk-rag
 ```
 
-### 2. Paket Kurulumu
+2. **Create virtual environment**
 
 ```bash
-# Sanal ortamı aktive et
-source myenv/bin/activate
-
-# Gerekli paketler zaten kurulu
-# Eksik varsa: pip install -r requirements.txt
+python -m venv myenv
+source myenv/bin/activate  # On Windows: myenv\Scripts\activate
 ```
 
-### 3. Ollama Model İndirme
+3. **Install dependencies**
 
 ```bash
-# Qwen2 modelini indir (4.4GB)
+pip install -r requirements.txt
+```
+
+4. **Download Ollama model**
+
+```bash
+# Download Qwen2 model (4.4GB)
 ollama pull qwen2
 
-# Alternatif modeller:
+# Alternative models:
 # ollama pull llama3
 # ollama pull mistral
 ```
 
-## 📁 Dosya Yapısı
+5. **Run the improved system**
+
+```bash
+# Web interface (recommended)
+python improved_web_app.py
+# Open http://localhost:8080
+
+# Command line interface
+python safe_interactive.py
+```
+
+## 📁 Project Structure
 
 ```
 nutuk-rag/
-├── rag_system.py      # Ana RAG sistemi
-├── web_app.py         # Web arayüzü
-├── batch_test.py      # Toplu test
-├── demo.py           # Örnek kullanımlar
-├── test_search.py    # Arama testi
-├── nutuk.pdf         # Kaynak belge
-├── rag_chroma_db/    # Vektör veritabanı
-└── templates/        # Web şablonları
+├── improved_rag_system.py    # 🚀 Enhanced RAG system
+├── improved_web_app.py       # 🌐 Modern web interface
+├── safe_interactive.py       # 💬 Safe terminal interface
+├── rag_system.py            # 📟 Original RAG system
+├── web_app.py               # 🌐 Original web interface
+├── compare_systems.py       # 🆚 System comparison
+├── nutuk.pdf                # 📚 Source document
+├── improved_rag_chroma_db/  # 🗃️ Enhanced vector database
+├── rag_chroma_db/          # 🗃️ Original vector database
+└── templates/              # 🎨 Web templates
 ```
 
-## 🎮 Kullanım Yöntemleri
+## 🎮 Usage Options
 
-### 1. 💬 Terminal (İnteraktif)
+### 1. 🌐 Web Interface (Recommended)
 
 ```bash
-python rag_system.py
-```
-
-- Soru sorun, yanıt alın
-- `q` ile çıkış
-
-### 2. 🌐 Web Arayüzü
-
-```bash
-python web_app.py
-```
-
-- http://localhost:8000 açın
-- Modern web arayüzü
-- Görsel sonuçlar
-
-### 3. 🧪 Toplu Test
-
-```bash
-python batch_test.py
-```
-
-- 10 örnek soru
-- Otomatik test
-
-### 4. 🎬 Demo
-
-```bash
-python demo.py
-```
-
-- Farklı kullanım örnekleri
-- Adım adım açıklamalar
-
-### 5. 🔍 Sadece Arama
-
-```bash
-python test_search.py
-```
-
-- LLM olmadan sadece arama
-- Hızlı test
-
-## 📝 Örnek Sorular
-
-### 🏛️ Tarihsel Sorular
-
-- "Mustafa Kemal Atatürk kimdir?"
-- "TBMM ne zaman kuruldu?"
-- "Kurtuluş Savaşı nasıl başladı?"
-
-### 🎯 Spesifik Konular
-
-- "İzmir'in işgali nasıl gerçekleşti?"
-- "Milli Mücadele'nin amacı neydi?"
-- "Ankara hangi durumda bulunuyordu?"
-
-### 📊 Analitik Sorular
-
-- "Nutuk'ta hangi konular ele alınır?"
-- "En önemli olaylar nelerdir?"
-- "Hangi kişilerden bahsedilir?"
-
-## ⚙️ Konfigürasyon
-
-### Model Değiştirme
-
-```python
-# rag_system.py içinde
-rag = NutukRAGSystem(model_name="llama3:latest")
-```
-
-### Arama Sonuç Sayısı
-
-```python
-# Daha fazla belge için
-rag.ask("soru", k=5)  # Varsayılan k=3
-```
-
-### Embedding Modeli
-
-```python
-# Farklı embedding modeli
-embedding_model_name = "sentence-transformers/all-MiniLM-L6-v2"
-```
-
-## 🔧 Sorun Giderme
-
-### Ollama Çalışmıyor
-
-```bash
-# Ollama durumunu kontrol et
-ollama list
-
-# Servisi yeniden başlat
-ollama serve
-```
-
-### ChromaDB Hatası
-
-```bash
-# Veritabanını yeniden oluştur
-rm -rf rag_chroma_db/
-python main.py  # PDF'i tekrar işle
-```
-
-### Memory Hatası
-
-```bash
-# Daha küçük model kullan
-ollama pull phi3:mini
-```
-
-### Port Hatası (Web)
-
-```python
-# web_app.py içinde portu değiştir
-uvicorn.run(app, host="0.0.0.0", port=8080)
-```
-
-## 🚀 İyileştirilmiş Sistem (YENİ!)
-
-### 🔧 Yeni Özellikler
-
-```bash
-# İyileştirilmiş sistemi çalıştır
-python improved_rag_system.py
-
-# İyileştirilmiş web arayüzü
 python improved_web_app.py
-# http://localhost:8080 açın
+```
 
-# Hızlı test
+- Open http://localhost:8080
+- Modern, responsive UI
+- Real-time responses
+- Source document display
+
+### 2. 💬 Terminal Interface
+
+```bash
+python safe_interactive.py
+```
+
+- Interactive Q&A
+- Type question number or 'q' to quit
+- Safe input handling
+
+### 3. 🧪 Quick Demo
+
+```bash
 python safe_interactive.py demo
 ```
 
-### ✨ İyileştirmeler
+- Automated testing
+- Example questions
+- Performance metrics
 
-- 🔍 **Hibrit Arama**: Semantic + Keyword (BM25)
-- 📏 **Küçük Chunk'lar**: 300 karakter (eski: 1000)
-- 🧠 **Daha İyi Model**: all-mpnet-base-v2
-- 🎯 **Reranking**: Sonuçları yeniden sıralar
-- ⚡ **Daha Hızlı**: Optimize edilmiş arama
-- 🌐 **Modern Web UI**: Gelişmiş arayüz
+### 4. 🆚 System Comparison
 
-### 🆚 Performans Karşılaştırması
+```bash
+python compare_systems.py
+```
 
-| Özellik            | Eski Sistem     | İyileştirilmiş              |
-| ------------------ | --------------- | --------------------------- |
-| Arama Türü         | Sadece Semantic | Hibrit (Semantic + Keyword) |
-| Chunk Boyutu       | 1000 karakter   | 300 karakter                |
-| Embedding Model    | MiniLM-L12      | MPNet-Base                  |
-| Reranking          | Yok             | Var                         |
-| Doğruluk           | Orta            | Yüksek                      |
-| İzmir İşgali Testi | ❌ Bulamıyor    | ✅ Sayfa 33'ü buluyor       |
+- Compare original vs improved system
+- Performance benchmarks
+- Accuracy tests
 
-## 📊 Performans İpuçları
+## 📝 Example Questions
 
-### 🚀 Hızlandırma
+### 🏛️ Historical Questions
 
-- Daha küçük model kullanın (`phi3:mini`)
-- Arama sonuç sayısını azaltın (`k=2`)
-- GPU kullanın (varsa)
+- "Who is Mustafa Kemal Atatürk?"
+- "When was the Grand National Assembly established?"
+- "How did the War of Independence begin?"
 
-### 🎯 Kalite Artırma
+### 🎯 Specific Topics
 
-- Daha büyük model kullanın (`llama3:70b`)
-- Arama sonuç sayısını artırın (`k=5`)
-- Daha iyi embedding modeli seçin
+- "How did the occupation of İzmir occur?"
+- "What was the purpose of the National Struggle?"
+- "What was Ankara's situation?"
 
-### 💾 Bellek Yönetimi
+### 📊 Analytical Questions
 
-- Bir seferde az soru sorun
-- Modeli düzenli yeniden başlatın
-- Sistem kaynaklarını izleyin
+- "What topics are covered in Nutuk?"
+- "What are the most important events?"
+- "Which people are mentioned?"
 
-## 🆘 Yardım
+## ⚙️ Configuration
 
-### Hata Durumunda
+### Change Model
 
-1. 🔍 Terminal çıktısını kontrol edin
-2. 🔧 Ollama servisini kontrol edin
-3. 📚 Bu kılavuzu tekrar okuyun
-4. 🆘 GitHub issues'da sorun açın
+```python
+# In improved_rag_system.py
+rag = ImprovedNutukRAGSystem(model_name="llama3:latest")
+```
 
-### Özellik İstekleri
+### Adjust Search Results
 
-- RAG sistemini geliştirmek isterseniz
-- Yeni modeller eklemek isterseniz
-- Farklı belgeler işlemek isterseniz
+```python
+# Get more documents
+rag.ask("question", k=8)  # Default k=6
+```
 
-## 🎉 Başarılı Kullanım!
+### Change Embedding Model
 
-Sistem çalışıyorsa:
+```python
+# In improved_rag_system.py
+embedding_model_name = "sentence-transformers/all-MiniLM-L6-v2"
+```
 
-- ✅ Embedding modeli yüklendi
-- ✅ ChromaDB yüklendi
-- ✅ Ollama modeli yüklendi
-- ✅ RAG sistemi hazır!
+## 🚀 Enhanced System Features
 
-**🎯 Artık Nutuk hakkında istediğiniz soruları sorabilirsiniz!**
+### 🔧 New Capabilities
+
+```bash
+# Run enhanced system
+python improved_rag_system.py
+
+# Enhanced web interface
+python improved_web_app.py
+# Open http://localhost:8080
+
+# Quick test
+python safe_interactive.py demo
+```
+
+### ✨ Improvements
+
+- 🔍 **Hybrid Search**: Semantic + Keyword (BM25)
+- 📏 **Smaller Chunks**: 300 characters (was: 1000)
+- 🧠 **Better Model**: all-mpnet-base-v2
+- 🎯 **Reranking**: Smart result ordering
+- ⚡ **Faster**: Optimized search
+- 🌐 **Modern Web UI**: Enhanced interface
+
+### 🆚 Performance Comparison
+
+| Feature               | Original System | Enhanced System             |
+| --------------------- | --------------- | --------------------------- |
+| Search Type           | Semantic Only   | Hybrid (Semantic + Keyword) |
+| Chunk Size            | 1000 chars      | 300 chars                   |
+| Embedding Model       | MiniLM-L12      | MPNet-Base-v2               |
+| Reranking             | None            | Advanced                    |
+| Accuracy              | Medium          | High                        |
+| İzmir Occupation Test | ❌ Fails        | ✅ Finds Page 33            |
+
+## 🔧 Troubleshooting
+
+### Ollama Not Working
+
+```bash
+# Check Ollama status
+ollama list
+
+# Restart service
+ollama serve
+```
+
+### ChromaDB Error
+
+```bash
+# Rebuild database
+rm -rf improved_rag_chroma_db/
+python improved_rag_system.py  # Will rebuild automatically
+```
+
+### Memory Issues
+
+```bash
+# Use smaller model
+ollama pull phi3:mini
+```
+
+### Port Error (Web)
+
+```python
+# Change port in improved_web_app.py
+uvicorn.run(app, host="0.0.0.0", port=8081)
+```
+
+## 📊 Performance Tips
+
+### 🚀 Speed Optimization
+
+- Use smaller models (`phi3:mini`)
+- Reduce search results (`k=3`)
+- Use GPU if available
+
+### 🎯 Quality Enhancement
+
+- Use larger models (`llama3:70b`)
+- Increase search results (`k=8`)
+- Choose better embedding models
+
+### 💾 Memory Management
+
+- Ask fewer questions per session
+- Restart model regularly
+- Monitor system resources
+
+## 🆘 Support
+
+### Common Issues
+
+1. 🔍 Check terminal output
+2. 🔧 Verify Ollama service
+3. 📚 Review this guide
+4. 🆘 Open GitHub issue
+
+### Feature Requests
+
+- Enhance RAG system
+- Add new models
+- Process different documents
+- Improve multilingual support
+
+## 🎉 Success Indicators
+
+System is working when you see:
+
+- ✅ Embedding model loaded
+- ✅ ChromaDB loaded
+- ✅ Ollama model loaded
+- ✅ RAG system ready!
+
+**🎯 Now you can ask questions about Nutuk!**
+
+## 🏗️ Technical Architecture
+
+### Core Components
+
+- **Document Processing**: PyPDF2 + RecursiveCharacterTextSplitter
+- **Vector Store**: ChromaDB with persistent storage
+- **Embeddings**: HuggingFace Transformers (all-mpnet-base-v2)
+- **Search**: Hybrid (Semantic + BM25 keyword search)
+- **LLM**: Ollama (Qwen2, Llama3, Mistral)
+- **Web Framework**: FastAPI with Jinja2 templates
+- **Reranking**: Custom scoring algorithm
+
+### System Flow
+
+1. 📄 **PDF Processing** → Text extraction and chunking
+2. 🔢 **Vectorization** → Create embeddings
+3. 🗃️ **Storage** → ChromaDB + BM25 index
+4. 🔍 **Search** → Hybrid retrieval
+5. 🎯 **Reranking** → Score and sort results
+6. 🤖 **Generation** → LLM response with sources
+
+## 🔗 Useful Links
+
+- [Ollama](https://ollama.ai) - Run LLMs locally
+- [LangChain](https://langchain.com) - RAG framework
+- [ChromaDB](https://chromadb.com) - Vector database
+- [FastAPI](https://fastapi.tiangolo.com) - Web API framework
+- [HuggingFace](https://huggingface.co) - Transformer models
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=SerdarYildiz06/nutuk-rag&type=Date)](https://star-history.com/#SerdarYildiz06/nutuk-rag&Date)
+
+## 📞 Contact
+
+- 📧 Email: your-email@example.com
+- 🐦 Twitter: [@your-twitter](https://twitter.com/your-twitter)
+- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
 
 ---
 
-## 🔗 Faydalı Bağlantılar
-
-- [Ollama](https://ollama.ai) - LLM çalıştırma
-- [LangChain](https://langchain.com) - RAG framework
-- [ChromaDB](https://chromadb.com) - Vektör veritabanı
-- [FastAPI](https://fastapi.tiangolo.com) - Web API
+**⭐ If you found this project helpful, please give it a star!**
