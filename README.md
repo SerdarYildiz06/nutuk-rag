@@ -339,9 +339,9 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 ## 📞 Contact
 
-- 📧 Email: your-email@example.com
-- 🐦 Twitter: [@your-twitter](https://twitter.com/your-twitter)
-- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
+- 📧 Email: yildizserdardev@gmail.com
+- 🐦 Twitter: [@your-twitter](https://x.com/SerdarYildiz05)
+- 💼 LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/serdaryildiz06/)
 
 ---
 
