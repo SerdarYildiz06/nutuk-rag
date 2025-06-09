@@ -178,6 +178,42 @@ ollama pull phi3:mini
 uvicorn.run(app, host="0.0.0.0", port=8080)
 ```
 
+## 🚀 İyileştirilmiş Sistem (YENİ!)
+
+### 🔧 Yeni Özellikler
+
+```bash
+# İyileştirilmiş sistemi çalıştır
+python improved_rag_system.py
+
+# İyileştirilmiş web arayüzü
+python improved_web_app.py
+# http://localhost:8080 açın
+
+# Hızlı test
+python safe_interactive.py demo
+```
+
+### ✨ İyileştirmeler
+
+- 🔍 **Hibrit Arama**: Semantic + Keyword (BM25)
+- 📏 **Küçük Chunk'lar**: 300 karakter (eski: 1000)
+- 🧠 **Daha İyi Model**: all-mpnet-base-v2
+- 🎯 **Reranking**: Sonuçları yeniden sıralar
+- ⚡ **Daha Hızlı**: Optimize edilmiş arama
+- 🌐 **Modern Web UI**: Gelişmiş arayüz
+
+### 🆚 Performans Karşılaştırması
+
+| Özellik            | Eski Sistem     | İyileştirilmiş              |
+| ------------------ | --------------- | --------------------------- |
+| Arama Türü         | Sadece Semantic | Hibrit (Semantic + Keyword) |
+| Chunk Boyutu       | 1000 karakter   | 300 karakter                |
+| Embedding Model    | MiniLM-L12      | MPNet-Base                  |
+| Reranking          | Yok             | Var                         |
+| Doğruluk           | Orta            | Yüksek                      |
+| İzmir İşgali Testi | ❌ Bulamıyor    | ✅ Sayfa 33'ü buluyor       |
+
 ## 📊 Performans İpuçları
 
 ### 🚀 Hızlandırma

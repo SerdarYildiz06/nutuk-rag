@@ -37,14 +37,20 @@ class NutukRAGSystem:
         
         # Prompt template'i oluştur
         self.prompt_template = ChatPromptTemplate.from_template("""
-Aşağıdaki belgeler kullanılarak soruyu yanıtla. Eğer belgelerden yanıt bulamıyorsan, "Bu bilgi belgede bulunmuyor" de.
+Sen Atatürk'ün Nutuk eseri konusunda uzman bir tarihçisin. Aşağıdaki belgeler kullanılarak soruyu detaylı ve açık bir şekilde yanıtla. 
+
+Önemli kurallar:
+- Belgelerde açık bir bilgi varsa, o bilgiyi tam olarak kullan
+- Tarihleri, isimleri ve olayları olduğu gibi aktar
+- Eğer belgelerden tam yanıt bulamıyorsan, "Bu konuda belgede yeterli bilgi bulunmuyor" de
+- Hangi sayfalardan bilgi aldığını belirt
 
 Belgeler:
 {context}
 
 Soru: {question}
 
-Yanıt: Verilen belgelere dayanarak, """)
+Yanıt: Verilen belgelere dayanarak,""")
         
         print("🎉 RAG sistemi hazır!")
     
